@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "914727604122",
+    "firebase_url": "https://vieneviene-f5b8a.firebaseio.com",
+    "project_id": "vieneviene-f5b8a",
+    "storage_bucket": "vieneviene-f5b8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914727604122:android:ed17a9fa228b6c6c",
+        "android_client_info": {
+          "package_name": "net.panamiur.vieneviene"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "914727604122-vq2afrho6lek9h3inrtanlfthd3325vj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.panamiur.vieneviene",
+            "certificate_hash": "75E7818F8EB1F6C8683FA71F11E18280B409B690"
+          }
+        },
+        {
+          "client_id": "914727604122-o22854dokvqfns5v3sk6k0egofkaeq7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6aII2FkAcbRj_rKtW9HNf7cg9btw0kmY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "914727604122-o22854dokvqfns5v3sk6k0egofkaeq7o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">VieneViene</string>
+    
+    <string name="button_select_roll_device_watchdog">Dispositivo Guardian</string>
+    <string name="button_select_roll_device_root">Dispositivo Administrador</string>
+
+    <string name="button_read_write_qr">Capturar codigo QR</string>
+    <string name="button_read_write_qr_save">Guardar</string>
+    <string name="msg_error_no_barcode_captured">No se capturo ningun codigo</string>
+    <string name="msg_error_barcode_error_format">error al capturar código QR</string>
+
+    <string name="dialog_read_write_qr_gen_code_watch_dog">Debe escanear este código QR en el dispositivo que selecciono como administrador</string>
+    <string name="dialog_read_write_qr_scan_code_watch_dog">Debe escanear el codigo QR del dispositivo que selecciono como administrador</string>
+    <string name="dialog_read_write_qr_gen_code_root">Debe escanear este código QR en el dispositivo que selecciono como guardian</string>
+    <string name="dialog_read_write_qr_scan_code_root">Debe escanear el codigo QR del dispositivo que selecciono como guardian</string>
+
+</resources>
