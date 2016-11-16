@@ -14,4 +14,13 @@
     <string name="dialog_read_write_qr_gen_code_root">Debe escanear este código QR en el dispositivo que selecciono como guardian</string>
     <string name="dialog_read_write_qr_scan_code_root">Debe escanear el codigo QR del dispositivo que selecciono como guardian</string>
 
+    <string name="button_dialog_warning_message_user_next">CONTINUAR</string>
+    <string name="msg_warning_eq_role_watchdog">¡Debe escanear un dispositivo que este asignado como monitor!</string>
+    <string name="msg_warning_eq_role_root">¡Debe escanear un dispositivo que este asignado como emisor!</string>
+    <string name="title_msg_warning_equals_role">¡Escaneo de mismo rol!</string>
+    <string name="msg_warning_scanned_bad_qr">¡Debe escanear el codigo que aparece en la seleccion de rol del otro dispositivo!</string>
+    <string name="title_msg_warning_scanned_bad_qr">¡Codigo QR inválido!</string>
+    <string name="msg_error_scanned_qr">¡Hubo un error al escanear el codigo, vuelva a intentarlo!</string>
+    <string name="title_msg_error_scanned_qr">¡Error al escanear!</string>
+
 </resources>

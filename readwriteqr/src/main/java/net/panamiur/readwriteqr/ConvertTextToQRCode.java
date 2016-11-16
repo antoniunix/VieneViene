@@ -14,11 +14,12 @@ import com.google.zxing.common.BitMatrix;
 
 public class ConvertTextToQRCode {
 
-public final static int QRcodeWidth = 800 ;
+public  int QRcodeWidth  ;
 
 
-    public Bitmap TextToImageEncode(String Value) throws WriterException {
+    public Bitmap TextToImageEncode(String Value,int size) throws WriterException {
         BitMatrix bitMatrix;
+        QRcodeWidth=size;
         try {
             bitMatrix = new MultiFormatWriter().encode(
                     Value,

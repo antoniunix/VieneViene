@@ -33,7 +33,6 @@
         android:layout_height="wrap_content"
         android:text="@string/button_read_write_qr_save"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
         android:onClick="onClickCaptureQrSave"/>
 
     <Button
@@ -42,7 +41,6 @@
         android:layout_height="wrap_content"
         android:text="@string/button_read_write_qr"
         android:layout_above="@id/btn_scann_qr_save"
-        android:layout_marginBottom="10dp"
         android:onClick="onClickCaptureQr"/>
 
     <TextView

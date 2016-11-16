@@ -1,8 +1,11 @@
 package net.panamiur.vieneviene;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +17,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.zxing.WriterException;
 
 import net.panamiur.readwriteqr.barcode.BarcodeCaptureActivity;
+import net.panamiur.vieneviene.DialogFragments.DialogWarningMessageUser;
 import net.panamiur.vieneviene.model.ModelReadWriteQR;
 import net.panamiur.vieneviene.util.Config;
 
@@ -26,6 +30,10 @@ public class ReadWriteQR extends AppCompatActivity {
     private static final int BARCODE_READER_REQUEST_CODE = 1;
     private final String LOG_TAG="ReadWriteQR";
     private int iRole;
+
+    private final int DESERIALIZE_OK=1;
+    private final int DESERIALIZE_MALFORMED=2;
+    private final int DESERIALIZE_IQUALS_ROLE=3;
 
 
     @Override
@@ -85,13 +93,46 @@ public class ReadWriteQR extends AppCompatActivity {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {
                     Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+                    switch (model.validateQRCode(barcode.displayValue,iRole)){
+                        case DESERIALIZE_OK:
 
+                            break;
+                        case DESERIALIZE_MALFORMED:
+                            new AlertDialog.Builder(this)
+                                    .setTitle(getResources().getString(R.string.title_msg_warning_scanned_bad_qr))
+                                    .setMessage(getResources().getString(R.string.msg_warning_scanned_bad_qr))
+                                    .setNeutralButton(R.string.button_dialog_warning_message_user_next, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    })
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();
+                            break;
+                        case DESERIALIZE_IQUALS_ROLE:
+                            new AlertDialog.Builder(this)
+                                    .setTitle(getResources().getString(R.string.title_msg_warning_equals_role))
+                                    .setMessage(iRole==Config.ROL_ROOT?getResources().getString(R.string.msg_warning_eq_role_root):getResources().getString(R.string.msg_warning_eq_role_watchdog))
+                                    .setNeutralButton(R.string.button_dialog_warning_message_user_next, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    })
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();
+                            break;
+                        default:
+                            break;
+                    }
 
-
-//                    txt_qr.setText(barcode.displayValue);
                 } else {
-
-//                    txt_qr.setText(R.string.msg_error_no_barcode_captured);
+                    new AlertDialog.Builder(this)
+                            .setTitle(getResources().getString(R.string.title_msg_error_scanned_qr))
+                            .setMessage(getResources().getString(R.string.msg_error_scanned_qr))
+                            .setNeutralButton(R.string.button_dialog_warning_message_user_next, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
                 }
             } else{
             Log.e(LOG_TAG,CommonStatusCodes.getStatusCodeString(resultCode));
