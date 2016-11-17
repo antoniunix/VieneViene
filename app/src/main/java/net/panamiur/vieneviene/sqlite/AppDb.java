@@ -23,6 +23,7 @@ public class AppDb extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(tablas.TABLE_CAR);
         db.execSQL(tablas.TABLE_CAR_DETAIL);
+        db.execSQL(tablas.TABLE_DEVICE_ROLE_ROOT_DETAIL);
     }
 
     @Override

@@ -6,6 +6,11 @@ package net.panamiur.vieneviene.sqlite;
 
 public class Tables {
 
+    public final String TABLE_DEVICE_ROLE_ROOT_DETAIL="CREATE TABLE device_role_root_detail(" +
+            "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+            "hash_device TEXT," +
+            "reg_id TEXT)";
+
     public final String TABLE_CAR="CREATE TABLE car(" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
             "reg_id TEXT,"+
@@ -21,5 +26,5 @@ public class Tables {
             "battery INTEGER," +
             "lon TEXT," +
             "lat TEXT," +
-            "date_capture TEXT";
+            "date_capture TEXT)";
 }
