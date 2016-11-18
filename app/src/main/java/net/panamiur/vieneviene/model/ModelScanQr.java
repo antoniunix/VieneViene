@@ -3,6 +3,7 @@ package net.panamiur.vieneviene.model;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -14,9 +15,11 @@ import net.panamiur.vieneviene.dao.DaoWtdDetailDeviceToReport;
 import net.panamiur.vieneviene.dto.DtoMessageFCMTransaction;
 import net.panamiur.vieneviene.dto.DtoWtdDetailDeviceToReport;
 import net.panamiur.vieneviene.network.SendPush;
+import net.panamiur.vieneviene.util.Base64Code;
 import net.panamiur.vieneviene.util.Config;
 import net.panamiur.vieneviene.util.MD5;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 
 /**
@@ -81,12 +84,13 @@ public class ModelScanQr {
         return new DaoWtdDetailDeviceToReport(context).insert(dto);
     }
 
-    public void sendRegistryFCM() {
+    public void sendRegistryFCM() throws UnsupportedEncodingException {
         DtoMessageFCMTransaction msg=new DtoMessageFCMTransaction();
         msg.setId(Config.ID_KEY_REGISTRY)
                 .setObj(getRegIdWatchDog())
                 .setHashDevice(MD5.md5(Config.getIMEI(context)));
-        new SendPush(context).sendPushToDevice(new DaoWtdDetailDeviceToReport(context).select().getRegId(),new Gson().toJson(msg));
+        String encode= Base64Code.encode(new Gson().toJson(msg));
+        new SendPush(context).sendPushToDevice(new DaoWtdDetailDeviceToReport(context).select().getRegId(),encode);
     }
 
     private String getRegIdWatchDog(){

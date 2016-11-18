@@ -72,9 +72,9 @@ public class SendPush {
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));
                 writer.write("{\n" +
-                        "    \"to\": \""+arg0[0].toString()+"\",\n" +
+                        "    \"to\": \""+arg0[0]+"\",\n" +
                         "    \"data\": {\n" +
-                        "      \"msg\": \""+arg0[1].toString()+"\",\n" +
+                        "      \"msg\": \""+arg0[1]+"\",\n" +
                         "     }\n" +
                         "  }");
 
@@ -106,6 +106,7 @@ public class SendPush {
                 }
             }
             catch(Exception e){
+                e.printStackTrace();
                 return new String("Exception: " + e.getMessage());
             }
         }

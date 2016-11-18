@@ -15,6 +15,8 @@ import com.google.gson.stream.MalformedJsonException;
 import net.panamiur.readwriteqr.barcode.BarcodeCaptureActivity;
 import net.panamiur.vieneviene.model.ModelScanQr;
 
+import java.io.UnsupportedEncodingException;
+
 public class ScanQR extends AppCompatActivity {
 
     private ModelScanQr model;
@@ -41,7 +43,101 @@ public class ScanQR extends AppCompatActivity {
     }
 
     public void onClickCaptureQrSave(View v) {
-        model.sendRegistryFCM();
+        try {
+            model.sendRegistryFCM();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         startActivity(new Intent(this, WatchDog.class));
         finish();
     }
