@@ -6,25 +6,32 @@ package net.panamiur.vieneviene.sqlite;
 
 public class Tables {
 
-    public final String TABLE_DEVICE_ROLE_ROOT_DETAIL="CREATE TABLE device_role_root_detail(" +
+    public final String TABLE_WTD_DETAIL_DEVICE_TO_REPORT="CREATE TABLE wtd_detail_device_to_report(" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
             "hash_device TEXT," +
             "reg_id TEXT)";
 
-    public final String TABLE_CAR="CREATE TABLE car(" +
+    public final String TABLE_ROOT_DETAIL_OF_CAR="CREATE TABLE root_detail_of_car(" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-            "reg_id TEXT,"+
             "hash_device TEXT," +
+            "reg_id TEXT,"+
+            "name_car TEXT,"+
             "color TEXT," +
-            "description TEXT," +
             "phone_number TEXT," +
+            "description TEXT," +
             "date_create TEXT)";
 
-    public final String TABLE_CAR_DETAIL="CREATE TABLE car_detail(" +
+    public final String TABLE_ROOT_LAST_REPORTS_OF_CAR="CREATE TABLE root_last_reports_of_car(" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-            "hash_car TEXT," +
+            "hash_device TEXT," +
             "battery INTEGER," +
             "lon TEXT," +
             "lat TEXT," +
             "date_capture TEXT)";
+
+    public final String TABLE_ROOT_DETAIL_OF_CAR_TEMP="CREATE TABLE root_detail_of_car_temp(" +
+            "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+            "hash_device TEXT," +
+            "reg_id TEXT," +
+            "date_received TEXT)";
 }

@@ -16,14 +16,14 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
         //Log data to Log Cat
         int id=0;
         Log.d(TAG, "From: " + remoteMessage.getFrom());
-        Log.d(TAG, "Notification Message Body: " + remoteMessage.getData().get("id"));
-        try {
-            id=Integer.parseInt(remoteMessage.getData().get("id"));
-        }catch (NumberFormatException e){
-            e.printStackTrace();
-        }
-
-        makeFromId(id);
+        Log.d(TAG, "Notification Message Body: " + remoteMessage.getData().get("msg"));
+//        try {
+//            id=Integer.parseInt(remoteMessage.getData().get("id"));
+//        }catch (NumberFormatException e){
+//            e.printStackTrace();
+//        }
+//
+//        makeFromId(id);
     }
 
     /**

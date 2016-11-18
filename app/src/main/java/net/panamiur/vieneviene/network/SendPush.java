@@ -48,8 +48,8 @@ public class SendPush {
     }
 
 
-    public void sendPushToDevice(String regId,String idTask){
-        new SendPostRequest().execute(regId,idTask);
+    public void sendPushToDevice(String regId,String obj){
+        new SendPostRequest().execute(regId,obj);
     }
 
     private  class SendPostRequest extends AsyncTask<String, Void, String> {
@@ -74,7 +74,7 @@ public class SendPush {
                 writer.write("{\n" +
                         "    \"to\": \""+arg0[0].toString()+"\",\n" +
                         "    \"data\": {\n" +
-                        "      \"id\": \""+arg0[1].toString()+"\",\n" +
+                        "      \"msg\": \""+arg0[1].toString()+"\",\n" +
                         "     }\n" +
                         "  }");
 

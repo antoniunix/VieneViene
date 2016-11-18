@@ -11,7 +11,7 @@ import com.google.zxing.WriterException;
 
 import net.panamiur.readwriteqr.ConvertTextToQRCode;
 import net.panamiur.vieneviene.BarCodeShow;
-import net.panamiur.vieneviene.dto.DtoRegisterDeviceQrGen;
+import net.panamiur.vieneviene.dto.DtoWtdDetailDeviceToReport;
 import net.panamiur.vieneviene.util.Config;
 import net.panamiur.vieneviene.util.MD5;
 
@@ -37,11 +37,10 @@ public class ModelBarCodeShow {
      * @throws WriterException
      */
     public Bitmap getQrOfText() throws WriterException {
-        DtoRegisterDeviceQrGen dtoRegisterDeviceQrGen = new DtoRegisterDeviceQrGen();
+        DtoWtdDetailDeviceToReport dtoRegisterDeviceQrGen = new DtoWtdDetailDeviceToReport();
 
         dtoRegisterDeviceQrGen.setHashDevice(MD5.md5(Config.getIMEI(context)))
-                .setRegId(getTokenFCM())
-                .setType(getRoleDevice());
+                .setRegId(getTokenFCM());
 
         return convertTextToQRCode.TextToImageEncode(new Gson().toJson(dtoRegisterDeviceQrGen),calculateSizeQRCode());
     }
@@ -51,15 +50,6 @@ public class ModelBarCodeShow {
         return sharedPref.getString(Config.ITEM_SHP_TOKEN,"0");
     }
 
-    /**
-     * get role the device saved in sharepreference, if don't exist retur 0
-     * @return 0 id don't exist
-     *
-     */
-    private int getRoleDevice(){
-        SharedPreferences sharedPref = context.getSharedPreferences(Config.NAME_SHARE_PREFERENCE, Context.MODE_PRIVATE);
-        return sharedPref.getInt(Config.ITEM_SHP_ROLE,0);
-    }
 
     /**
      * El codigo QR debe ser redimencionado al tamaño de la pantalla

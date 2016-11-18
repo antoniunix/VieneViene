@@ -10,9 +10,12 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.MalformedJsonException;
 
 import net.panamiur.vieneviene.ScanQR;
-import net.panamiur.vieneviene.dao.DaoDeviceRoleRootDetail;
-import net.panamiur.vieneviene.dto.DtoRegisterDeviceQrGen;
+import net.panamiur.vieneviene.dao.DaoWtdDetailDeviceToReport;
+import net.panamiur.vieneviene.dto.DtoMessageFCMTransaction;
+import net.panamiur.vieneviene.dto.DtoWtdDetailDeviceToReport;
+import net.panamiur.vieneviene.network.SendPush;
 import net.panamiur.vieneviene.util.Config;
+import net.panamiur.vieneviene.util.MD5;
 
 import java.lang.reflect.Type;
 
@@ -20,13 +23,13 @@ import java.lang.reflect.Type;
  * Created by gnu on 8/11/16.
  */
 
-public class ModelReadWriteQR {
+public class ModelScanQr {
 
 
     private Context context;
     private Activity activity;
 
-    public ModelReadWriteQR(ScanQR activity) {
+    public ModelScanQr(ScanQR activity) {
 
         this.context = activity.getApplicationContext();
         this.activity = activity;
@@ -59,9 +62,9 @@ public class ModelReadWriteQR {
      * @param textQr capture of scannQR
      * @return DtoRegisterDeviceQrGen
      */
-    public DtoRegisterDeviceQrGen deserializeTextQR(String textQr) throws MalformedJsonException, JsonSyntaxException {
+    public DtoWtdDetailDeviceToReport deserializeTextQR(String textQr) throws MalformedJsonException, JsonSyntaxException {
 
-        Type typeObjectGson = new TypeToken<DtoRegisterDeviceQrGen>() {
+        Type typeObjectGson = new TypeToken<DtoWtdDetailDeviceToReport>() {
         }.getType();
         return new Gson().fromJson(textQr, typeObjectGson);
     }
@@ -73,8 +76,21 @@ public class ModelReadWriteQR {
      *
      * @return 0 will error
      */
-    public int registerDeviceRootInDB(DtoRegisterDeviceQrGen dto) {
-        new DaoDeviceRoleRootDetail(context).delete();
-        return new DaoDeviceRoleRootDetail(context).insert(dto);
+    public int registerDeviceRootInDB(DtoWtdDetailDeviceToReport dto) {
+        new DaoWtdDetailDeviceToReport(context).delete();
+        return new DaoWtdDetailDeviceToReport(context).insert(dto);
+    }
+
+    public void sendRegistryFCM() {
+        DtoMessageFCMTransaction msg=new DtoMessageFCMTransaction();
+        msg.setId(Config.ID_KEY_REGISTRY)
+                .setObj(getRegIdWatchDog())
+                .setHashDevice(MD5.md5(Config.getIMEI(context)));
+        new SendPush(context).sendPushToDevice(new DaoWtdDetailDeviceToReport(context).select().getRegId(),new Gson().toJson(msg));
+    }
+
+    private String getRegIdWatchDog(){
+        SharedPreferences sharedPref = context.getSharedPreferences(Config.NAME_SHARE_PREFERENCE, Context.MODE_PRIVATE);
+        return sharedPref.getString(Config.ITEM_SHP_TOKEN,"0");
     }
 }

@@ -20,7 +20,6 @@ public class Config {
     public static final String ITEM_SHP_TOKEN="ITEM_SHP_TOKEN";
     public static final String ITEM_SHP_ROLE="ITEM_SHP_ROLE";
 
-    public static final String NAME_INTENT_EXTRAS="NAME_INTENT_EXTRAS";
 
     public static final String DB_NAME="vieneviene.db";
     public static final int VERSION_DB=1;
@@ -33,5 +32,7 @@ public class Config {
                 .getSystemService(Context.TELEPHONY_SERVICE);
         return telephonyManager.getDeviceId() != null ? telephonyManager.getDeviceId() : "0";
     }
+
+    public static final int ID_KEY_REGISTRY=1;
 
 }

@@ -13,11 +13,11 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.gson.stream.MalformedJsonException;
 
 import net.panamiur.readwriteqr.barcode.BarcodeCaptureActivity;
-import net.panamiur.vieneviene.model.ModelReadWriteQR;
+import net.panamiur.vieneviene.model.ModelScanQr;
 
 public class ScanQR extends AppCompatActivity {
 
-    private ModelReadWriteQR model;
+    private ModelScanQr model;
     private static final int BARCODE_READER_REQUEST_CODE = 1;
     private final String LOG_TAG = "ScanQR";
     private Button btn_scann_qr_save;
@@ -32,7 +32,7 @@ public class ScanQR extends AppCompatActivity {
 
     private void init() {
         btn_scann_qr_save=(Button)findViewById(R.id.btn_scann_qr_save);
-        model = new ModelReadWriteQR(this);
+        model = new ModelScanQr(this);
     }
 
     public void onClickCaptureQr(View v) {
@@ -41,6 +41,7 @@ public class ScanQR extends AppCompatActivity {
     }
 
     public void onClickCaptureQrSave(View v) {
+        model.sendRegistryFCM();
         startActivity(new Intent(this, WatchDog.class));
         finish();
     }
