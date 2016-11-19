@@ -20,5 +20,11 @@
 
     <!--GENERIC STRING-->
     <string name="button_bcs_continue">Continuar</string>
+    <string name="button_save">Guardar </string>
+    
+    <!--DialogCompleteRegister-->
+    <string name="label_name_car">Nombre del automovil</string>
+    <string name="label_phone_number">Numero de telefono</string>
+    <string name="label_description">Descripcion </string>
 
 </resources>

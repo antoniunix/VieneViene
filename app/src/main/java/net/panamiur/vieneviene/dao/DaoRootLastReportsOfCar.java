@@ -17,7 +17,7 @@ public class DaoRootLastReportsOfCar {
     private SQLiteDatabase db;
     private Cursor cursor;
 
-    public static String TABLE_NAME="root_detail_of_car_temp";
+    public static String TABLE_NAME="root_last_reports_of_car";
     public static String PK_FIELD="_id";
 
     private final String ID="_id";

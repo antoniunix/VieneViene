@@ -28,6 +28,7 @@ public class DaoRootDetailOfCar {
     private final String PHONE_NUMBER="phone_number";
     private final String DESCRIPTION="description";
     private final String DATE_CREATE="date_create";
+    private final String MODEL_DEVICE="model_device";
 
     public DaoRootDetailOfCar(Context context) {
         helper=new AppDb(context);
@@ -44,7 +45,7 @@ public class DaoRootDetailOfCar {
 
             SQLiteStatement insStmnt=db.compileStatement("" +
                     "INSERT INTO " +
-                    TABLE_NAME+" ("+HASH_DEVICE+","+REG_ID+","+NAME_CAR+","+COLOR+","+PHONE_NUMBER+","+DESCRIPTION+","+DATE_CREATE+") VALUES(?,?,?,?,?,?,?);");
+                    TABLE_NAME+" ("+HASH_DEVICE+","+REG_ID+","+NAME_CAR+","+COLOR+","+PHONE_NUMBER+","+DESCRIPTION+","+DATE_CREATE+","+MODEL_DEVICE+") VALUES(?,?,?,?,?,?,?,?);");
             db.beginTransaction();
             try {
                 insStmnt.bindString(1, obj.getHashDevice());
@@ -81,6 +82,11 @@ public class DaoRootDetailOfCar {
             } catch (Exception e) {
                 insStmnt.bindNull(7);
             }
+            try {
+                insStmnt.bindString(8, obj.getModelDevice());
+            } catch (Exception e) {
+                insStmnt.bindNull(8);
+            }
             insStmnt.executeInsert();
             db.setTransactionSuccessful();
         } catch (Exception e) {
@@ -96,12 +102,12 @@ public class DaoRootDetailOfCar {
     }
 
 
-    public int delete()
+    public int delete(String hashDevice)
     {
         int resp=0;
         try {
             db = helper.getWritableDatabase();
-            resp = db.delete(TABLE_NAME, null, null);
+            resp = db.delete(TABLE_NAME, "hash_device='"+hashDevice+"'", null);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package net.panamiur.vieneviene;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import net.panamiur.vieneviene.model.ModelSelectRollDevice;

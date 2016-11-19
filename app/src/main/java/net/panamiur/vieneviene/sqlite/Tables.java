@@ -19,6 +19,7 @@ public class Tables {
             "color TEXT," +
             "phone_number TEXT," +
             "description TEXT," +
+            "model_device TEXT," +
             "date_create TEXT)";
 
     public final String TABLE_ROOT_LAST_REPORTS_OF_CAR="CREATE TABLE root_last_reports_of_car(" +
@@ -33,5 +34,6 @@ public class Tables {
             "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
             "hash_device TEXT," +
             "reg_id TEXT," +
+            "model_device TEXT," +
             "date_received TEXT)";
 }

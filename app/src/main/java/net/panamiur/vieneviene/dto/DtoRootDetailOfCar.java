@@ -13,68 +13,86 @@ public class DtoRootDetailOfCar {
     private String phoneNumber;
     private String description;
     private String dateCreate;
+    private String modelDevice;
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public DtoRootDetailOfCar setId(int id) {
         this.id = id;
+        return this;
     }
 
     public String getHashDevice() {
         return hashDevice;
     }
 
-    public void setHashDevice(String hashDevice) {
+    public DtoRootDetailOfCar setHashDevice(String hashDevice) {
         this.hashDevice = hashDevice;
+        return this;
     }
 
     public String getRegId() {
         return regId;
     }
 
-    public void setRegId(String regId) {
+    public DtoRootDetailOfCar setRegId(String regId) {
         this.regId = regId;
+        return this;
     }
 
     public String getNameCar() {
         return nameCar;
     }
 
-    public void setNameCar(String nameCar) {
+    public DtoRootDetailOfCar setNameCar(String nameCar) {
         this.nameCar = nameCar;
+        return this;
     }
 
     public String getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public DtoRootDetailOfCar setColor(String color) {
         this.color = color;
+        return this;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public DtoRootDetailOfCar setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public DtoRootDetailOfCar setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getDateCreate() {
         return dateCreate;
     }
 
-    public void setDateCreate(String dateCreate) {
+    public DtoRootDetailOfCar setDateCreate(String dateCreate) {
         this.dateCreate = dateCreate;
+        return this;
+    }
+
+    public String getModelDevice() {
+        return modelDevice;
+    }
+
+    public DtoRootDetailOfCar setModelDevice(String modelDevice) {
+        this.modelDevice = modelDevice;
+        return this;
     }
 }

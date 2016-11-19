@@ -14,6 +14,7 @@ public class DtoMessageFCMTransaction {
     private String battery;
     private long time;
     private String hashDevice; //con este has se identificara al dispocitivo emitente del FCM
+    private String modelDevice;
 
     public int getId() {
         return id;
@@ -76,5 +77,13 @@ public class DtoMessageFCMTransaction {
     public DtoMessageFCMTransaction setHashDevice(String hashDevice) {
         this.hashDevice = hashDevice;
         return this;
+    }
+
+    public String getModelDevice() {
+        return modelDevice;
+    }
+
+    public void setModelDevice(String modelDevice) {
+        this.modelDevice = modelDevice;
     }
 }
