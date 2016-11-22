@@ -33,12 +33,21 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+        <service
+            android:name=".services.ServiceDamageReport"
+            android:exported="false" />
+        <service
+            android:name=".services.ServiceGeolocation"
+            android:exported="false" />
 
         <activity android:name=".ScanQR" />
         <activity android:name=".WatchDog" />
         <activity android:name=".HomeMap" />
         <activity android:name=".BarCodeShow" />
-        <activity android:name=".DialogCompleteRegister"></activity>
+        <activity android:name=".DialogCompleteRegister" />
+        <activity
+            android:name=".dialogs.CarInDamage"
+            ></activity>
     </application>
 
 </manifest>

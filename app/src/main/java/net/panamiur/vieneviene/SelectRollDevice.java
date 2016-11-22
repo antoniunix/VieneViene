@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import net.panamiur.movementreport.Movement;
 import net.panamiur.vieneviene.model.ModelSelectRollDevice;
 import net.panamiur.vieneviene.util.Config;
 

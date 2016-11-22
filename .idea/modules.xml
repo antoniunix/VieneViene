@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/VieneViene.iml" filepath="$PROJECT_DIR$/VieneViene.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/geolocation/geolocation.iml" filepath="$PROJECT_DIR$/geolocation/geolocation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/movementreport/movementreport.iml" filepath="$PROJECT_DIR$/movementreport/movementreport.iml" />
       <module fileurl="file://$PROJECT_DIR$/readwriteqr/readwriteqr.iml" filepath="$PROJECT_DIR$/readwriteqr/readwriteqr.iml" />
     </modules>
   </component>

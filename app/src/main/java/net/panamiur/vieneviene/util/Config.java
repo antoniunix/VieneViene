@@ -34,5 +34,7 @@ public class Config {
     }
 
     public static final int ID_KEY_REGISTRY=1;
+    public static final int ID_KEY_MONITORING_SLAM=2;
+    public static final int ID_KEY_REPORT_CAR_DANGER=3;
 
 }

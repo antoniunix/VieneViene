@@ -71,12 +71,15 @@ public class SendPush {
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));
-                writer.write("{\n" +
+                String body="{\n" +
                         "    \"to\": \""+arg0[0]+"\",\n" +
                         "    \"data\": {\n" +
                         "      \"msg\": \""+arg0[1]+"\",\n" +
                         "     }\n" +
-                        "  }");
+                        "  }";
+                Log.e("SEND PUSH","PUSH "+body);
+
+                writer.write(body);
 
                 writer.flush();
                 writer.close();

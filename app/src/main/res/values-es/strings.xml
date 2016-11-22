@@ -27,4 +27,8 @@
     <string name="label_phone_number">Numero de telefono</string>
     <string name="label_description">Descripcion </string>
 
+    <!--ServiceDamageReport-->
+    <string name="alert_title_car_in_danger">COCHE EN PELIGRO</string>
+    <string name="alert_car_in_danger">¡Atencion, su coche acaba de ser golpeado por un objeto!</string>
+
 </resources>
