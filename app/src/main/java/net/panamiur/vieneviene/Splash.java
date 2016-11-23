@@ -36,7 +36,6 @@ public class Splash extends AppCompatActivity {
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                         .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
                         .build());
-
     }
 
     @Override

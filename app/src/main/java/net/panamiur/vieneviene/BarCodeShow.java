@@ -61,10 +61,10 @@ public class BarCodeShow extends AppCompatActivity {
         try {
             encode = Base64Code.encode(new Gson().toJson(msg));
             new SendPush(getApplicationContext())
-                    .sendPushToDevice("eqzf3bdUzgA:APA91bFzvB37rfjOylgzd6-tiKOFX97trCpUnKQjcMWA6RDrXM_Wv9LcYaIqUi39lgqJEMHo4Jur6nI-hCDpafFRJrANuxA9hsimJWMyjcL9AP6FwTbLlAoFw4WyywguFuqmZoTIbp7F", encode);
+                    .sendPushToDevice("f6lQOZNTRdA:APA91bHVTXfhukdkZuG5AfpUTwStFbGDq3pxyOUSgRZxGOMbGeHubt8VcDhyo7AvAFzYCuVUD11WMUfOACK5E1NAbj3wjEhkh5yUFeXxM9CMhXpu9e1eJvv1B_ikvuoBUG_juYmCbSox", encode);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-//        startService(new Intent(this, ServiceGeolocation.class));
+        //startService(new Intent(this, ServiceGeolocation.class));
     }
 }

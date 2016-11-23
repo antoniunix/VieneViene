@@ -2,6 +2,7 @@ package net.panamiur.geolocation;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -18,21 +19,23 @@ import android.widget.Toast;
 
 public class Geolocation implements LocationListener {
 
-    private static Geolocation INSTANCE=new Geolocation();
+    private static Geolocation INSTANCE = new Geolocation();
     private Context context;
     private LocationManager locationManager;
     private String provider;
-    private int timeUpdateLocation=1000*10;
+    private int timeUpdateLocation = 1000 * 10;
     private LocationListener locationListener;
+    private Location location;
 
     private Geolocation() {
     }
 
-    public static Geolocation getINSTANCE(){
+    public static Geolocation getINSTANCE() {
 
         return INSTANCE;
     }
-    public Geolocation setContext(Context context){
+
+    public Geolocation setContext(Context context) {
         this.context = context;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
@@ -42,41 +45,44 @@ public class Geolocation implements LocationListener {
                 && ActivityCompat.checkSelfPermission(context,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+            context.startActivity(new Intent(context, RequestPermission.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+        } else {
+            location = locationManager.getLastKnownLocation(provider);
         }
-        Location location = locationManager.getLastKnownLocation(provider);
 
         // Initialize the location fields
         if (location != null) {
-            Log.e("GEOLOCATION","Provider " + provider + " has been selected.");
             onLocationChanged(location);
         } else {
-            Log.e("GEOLOCATION","Location not available");
-            Log.e("GEOLOCATION","Location not available");
+            Log.e("GEOLOCATION", "Location not available");
         }
         return this;
     }
 
-    public Geolocation setTimeUpdateLocation(int timeUpdateLocation){
-        this.timeUpdateLocation=timeUpdateLocation;
+    public Geolocation setTimeUpdateLocation(int timeUpdateLocation) {
+        this.timeUpdateLocation = timeUpdateLocation;
         return this;
     }
 
-    public Geolocation setLocationListener(LocationListener locationListener){
-        this.locationListener=locationListener;
+    public Geolocation setLocationListener(LocationListener locationListener) {
+        this.locationListener = locationListener;
         return this;
     }
 
-    public void startGeo(){
+    public void startGeo() {
         if (ActivityCompat.checkSelfPermission(context,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(context,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+            context.startActivity(new Intent(context, RequestPermission.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        } else {
+            locationManager.requestLocationUpdates(provider, timeUpdateLocation, 0, this);
         }
-        locationManager.requestLocationUpdates(provider,1000*10,0, this);
     }
 
-    public void stopGeo(){
+    public void stopGeo() {
         if (ActivityCompat.checkSelfPermission(context,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(context,
@@ -89,7 +95,7 @@ public class Geolocation implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
 
-        if(locationListener!=null){
+        if (locationListener != null) {
             locationListener.onLocationChanged(location);
         }
     }

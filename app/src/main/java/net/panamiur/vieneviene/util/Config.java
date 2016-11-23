@@ -20,6 +20,9 @@ public class Config {
     public static final String ITEM_SHP_TOKEN="ITEM_SHP_TOKEN";
     public static final String ITEM_SHP_ROLE="ITEM_SHP_ROLE";
 
+    public static final String ITEM_SHP_LAST_SLAM="ITEM_SHP_LAST_SLAM";
+    public static final long TIME_SEND_DAMAGE_REPORT=1000*5;
+
 
     public static final String DB_NAME="vieneviene.db";
     public static final int VERSION_DB=1;

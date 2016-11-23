@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import net.panamiur.geolocation.Geolocation;
+import net.panamiur.vieneviene.util.Config;
 
 /**
  * Created by gnu on 21/11/16.
@@ -16,6 +17,7 @@ import net.panamiur.geolocation.Geolocation;
 public class ServiceGeolocation extends IntentService implements LocationListener{
 
     private Geolocation geolocation;
+    private int timeUpdateLocation;
 
     public ServiceGeolocation() {
         super("ServiceGeolocation");
@@ -23,8 +25,9 @@ public class ServiceGeolocation extends IntentService implements LocationListene
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        timeUpdateLocation=intent.getIntExtra(Config.NAME_SHARE_PREFERENCE,10000);
         geolocation=Geolocation.getINSTANCE();
-        geolocation.setContext(getApplicationContext()).setLocationListener(this);
+        geolocation.setContext(getApplicationContext()).setLocationListener(this).setTimeUpdateLocation(timeUpdateLocation);
         geolocation.startGeo();
 
     }

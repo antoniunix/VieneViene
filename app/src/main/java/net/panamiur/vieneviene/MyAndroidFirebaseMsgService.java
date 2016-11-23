@@ -17,6 +17,7 @@ import net.panamiur.vieneviene.dialogs.CarInDamage;
 import net.panamiur.vieneviene.dto.DtoMessageFCMTransaction;
 import net.panamiur.vieneviene.dto.DtoRootDetailOfCarTemp;
 import net.panamiur.vieneviene.services.ServiceDamageReport;
+import net.panamiur.vieneviene.services.ServiceGeolocation;
 import net.panamiur.vieneviene.util.Base64Code;
 import net.panamiur.vieneviene.util.Config;
 
@@ -60,6 +61,8 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
      * 1 registro de Watchdog a Root
      * 2 iniciar monitoreo de golpe
      * 3 reporte de golpe
+     * 4 activar geolocation
+     * 5 oido de dios
      */
     private void processMessage(DtoMessageFCMTransaction dtoMessageFCMTransaction) {
         switch (dtoMessageFCMTransaction.getId()) {
@@ -86,8 +89,17 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
                 }
                 break;
             case 3:
-
                 startActivity(new Intent(getApplicationContext(), CarInDamage.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                break;
+            case 4:
+                try {
+                    startService(new Intent(getApplicationContext(), ServiceGeolocation.class)
+                            .putExtra(Config.NAME_SHARE_PREFERENCE,
+                                    Integer.valueOf(dtoMessageFCMTransaction.getObj())));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }

@@ -1,8 +1,10 @@
 package net.panamiur.vieneviene.services;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -33,13 +35,13 @@ public class ServiceDamageReport extends IntentService implements OnSlamListener
 
     public ServiceDamageReport() {
         super("ServiceDamageReport");
-        Log.d("servicio", "Constructor "+sensibility);
+        Log.d("servicio", "Constructor " + sensibility);
 
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        sensibility=intent.getFloatExtra(Config.NAME_SHARE_PREFERENCE,0.8f);
+        sensibility = intent.getFloatExtra(Config.NAME_SHARE_PREFERENCE, 0.8f);
         movement = Movement.getInstance();
         movement.setContext(getApplicationContext()).setOnSlamListener(this).setSensibility(sensibility);
         movement.stopService();
@@ -48,19 +50,36 @@ public class ServiceDamageReport extends IntentService implements OnSlamListener
 
     @Override
     public void onSlamListener(double axisX, double axisY, double axisZ) {
-        DtoMessageFCMTransaction msg = new DtoMessageFCMTransaction();
-        msg.setId(Config.ID_KEY_REPORT_CAR_DANGER)
-                .setHashDevice(MD5.md5(Config.getIMEI(getApplicationContext())));
 
-        String encode = null;
-        try {
-            encode = Base64Code.encode(new Gson().toJson(msg));
-            new SendPush(getApplicationContext())
-                    .sendPushToDevice(
-                            new DaoWtdDetailDeviceToReport(getApplicationContext()).select().getRegId(), encode);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        if (isTimeSendDamageReport()) {
+            DtoMessageFCMTransaction msg = new DtoMessageFCMTransaction();
+            msg.setId(Config.ID_KEY_REPORT_CAR_DANGER)
+                    .setHashDevice(MD5.md5(Config.getIMEI(getApplicationContext())));
+
+            String encode = null;
+            try {
+                encode = Base64Code.encode(new Gson().toJson(msg));
+                new SendPush(getApplicationContext())
+                        .sendPushToDevice(
+                                new DaoWtdDetailDeviceToReport(getApplicationContext()).select().getRegId(), encode);
+                saveLastSalamTime();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
         }
 
+    }
+
+    private void saveLastSalamTime() {
+        SharedPreferences sharedPref = getSharedPreferences(Config.NAME_SHARE_PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putLong(Config.ITEM_SHP_LAST_SLAM, System.currentTimeMillis());
+        editor.commit();
+    }
+
+    private boolean isTimeSendDamageReport() {
+        SharedPreferences sharedPref = getSharedPreferences(Config.NAME_SHARE_PREFERENCE, Context.MODE_PRIVATE);
+        return (System.currentTimeMillis()-sharedPref.getLong(Config.ITEM_SHP_LAST_SLAM, 0) )> Config.TIME_SEND_DAMAGE_REPORT;
     }
 }
