@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +36,11 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import net.panamiur.vieneviene.dto.DtoNewEvent;
 import net.panamiur.vieneviene.dto.DtoRootDetailOfCar;
 import net.panamiur.vieneviene.model.ModelHomeMap;
 import net.panamiur.vieneviene.util.Config;
@@ -43,20 +48,25 @@ import net.panamiur.vieneviene.util.Config;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+import de.greenrobot.event.EventBus;
+
 /**
- * @author  antoniunix
- * Esta clase se muestra solo en el ROLEDEVICE ROOT, ya que se desplegara el codigo QR con la informacion
- * del REG ID FCM y hash del dispocitivo
+ * @author antoniunix
+ *         Esta clase se muestra solo en el ROLEDEVICE ROOT, ya que se desplegara el codigo QR con la informacion
+ *         del REG ID FCM y hash del dispocitivo
  */
 public class HomeMap extends AppCompatActivity implements
         Toolbar.OnMenuItemClickListener,
-        OnMapReadyCallback,View.OnClickListener,
-        CompoundButton.OnCheckedChangeListener{
+        OnMapReadyCallback, View.OnClickListener,
+        CompoundButton.OnCheckedChangeListener,
+        GoogleMap.OnMarkerClickListener {
 
     private ModelHomeMap model;
     private Toolbar toolbar;
     private ListView lst_car;
     private DrawerLayout drawer_layout;
+    private GoogleMap mMap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,22 +75,23 @@ public class HomeMap extends AppCompatActivity implements
         init();
     }
 
-    private void init(){
-        model=new ModelHomeMap(this);
+    private void init() {
+        model = new ModelHomeMap(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        lst_car=(ListView)findViewById(R.id.lst_car);
-        drawer_layout=(DrawerLayout) findViewById(R.id.drawer_layout);
+        lst_car = (ListView) findViewById(R.id.lst_car);
+        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
-        MapFragment mapFragment=(MapFragment)getFragmentManager().findFragmentById(R.id.map);
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        EventBus.getDefault().register(this);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        lst_car.setAdapter(model.getAdapterDetailOfCar(this,this));
+        lst_car.setAdapter(model.getAdapterDetailOfCar(this, this));
     }
 
     @Override
@@ -92,10 +103,10 @@ public class HomeMap extends AppCompatActivity implements
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        if(item.getItemId()==R.id.add_car){
-            startActivity(new Intent(this,BarCodeShow.class));
-        }else if(item.getItemId()==R.id.setting){
-            startActivity(new Intent(this,SelectRollDevice.class));
+        if (item.getItemId() == R.id.add_car) {
+            startActivity(new Intent(this, BarCodeShow.class));
+        } else if (item.getItemId() == R.id.setting) {
+            startActivity(new Intent(this, SelectRollDevice.class));
             finish();
         }
 
@@ -105,19 +116,26 @@ public class HomeMap extends AppCompatActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+        mMap = googleMap;
+
+        model.addMarkerToMap(mMap);
+
+        // Set a listener for marker click.
+        mMap.setOnMarkerClickListener(this);
+
     }
 
     @Override
     public void onClick(View view) {
 
-        if(view.getId()==R.id.btn_config){
-            DtoRootDetailOfCar dto=(DtoRootDetailOfCar)view.getTag();
-            startActivity(new Intent(this,DialogCompleteRegister.class).putExtra(Config.NAME_SHARE_PREFERENCE,dto));
-        }else if(view.getId()==R.id.btn_ear_of_good){
-            DtoRootDetailOfCar dto=(DtoRootDetailOfCar)view.getTag();
-            if(dto.getPhoneNumber()==null || dto.getPhoneNumber().isEmpty()){
-                Toast.makeText(this,getResources().getString(R.string.warning_ear_of_god),Toast.LENGTH_LONG).show();
-            }else{
+        if (view.getId() == R.id.btn_config) {
+            DtoRootDetailOfCar dto = (DtoRootDetailOfCar) view.getTag();
+            startActivity(new Intent(this, DialogCompleteRegister.class).putExtra(Config.NAME_SHARE_PREFERENCE, dto));
+        } else if (view.getId() == R.id.btn_ear_of_good) {
+            DtoRootDetailOfCar dto = (DtoRootDetailOfCar) view.getTag();
+            if (dto.getPhoneNumber() == null || dto.getPhoneNumber().isEmpty()) {
+                Toast.makeText(this, getResources().getString(R.string.warning_ear_of_god), Toast.LENGTH_LONG).show();
+            } else {
                 try {
                     model.startEarOfGod(dto);
                 } catch (UnsupportedEncodingException e) {
@@ -130,32 +148,51 @@ public class HomeMap extends AppCompatActivity implements
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-        if(compoundButton.getId()==R.id.swt_active ){
-            DtoRootDetailOfCar dto=(DtoRootDetailOfCar)compoundButton.getTag();
-            if(b){
+        if (compoundButton.getId() == R.id.swt_active) {
+            DtoRootDetailOfCar dto = (DtoRootDetailOfCar) compoundButton.getTag();
+            if (b) {
                 model.startMovementSensor(dto);
-            }else{
+            } else {
 
             }
 
-        }else if(compoundButton.getId()==R.id.swt_active_geo){
-            DtoRootDetailOfCar dto=(DtoRootDetailOfCar)compoundButton.getTag();
-            if(b){
+        } else if (compoundButton.getId() == R.id.swt_active_geo) {
+            DtoRootDetailOfCar dto = (DtoRootDetailOfCar) compoundButton.getTag();
+            if (b) {
                 model.startGeolocation(dto);
-            }else{
+            } else {
 
             }
         }
 
     }
 
-    public void onClickExpanNavigation(View v){
+    public void onClickExpanNavigation(View v) {
 
 //        if(!drawer_layout.isDrawerOpen(GravityCompat.START)){
-            drawer_layout.closeDrawer(GravityCompat.START);
+        drawer_layout.closeDrawer(GravityCompat.START);
 //        }else{
 //            drawer_layout.openDrawer(GravityCompat.END);
 //        }
 
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Toast.makeText(this,
+                marker.getTitle(),
+                Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    public void onEventMainThread(DtoNewEvent event) {
+        // your implementation
+        Log.e("Event", "Event");
+        if (mMap != null) {
+            model.addMarkerToMap(mMap);
+
+        }else{
+            Log.e("Event", "mMap aun no listo");
+        }
     }
 }

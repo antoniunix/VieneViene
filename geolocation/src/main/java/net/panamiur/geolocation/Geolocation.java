@@ -13,6 +13,8 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import net.panamiur.geolocation.interfaces.OnApiGeolocation;
+
 /**
  * Created by gnu on 21/11/16.
  */
@@ -24,8 +26,9 @@ public class Geolocation implements LocationListener {
     private LocationManager locationManager;
     private String provider;
     private int timeUpdateLocation = 1000 * 10;
-    private LocationListener locationListener;
+    private OnApiGeolocation onApiGeolocation;
     private Location location;
+    private Criteria criteria;
 
     private Geolocation() {
     }
@@ -38,8 +41,12 @@ public class Geolocation implements LocationListener {
     public Geolocation setContext(Context context) {
         this.context = context;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false);
+        criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setAltitudeRequired(false);
+        criteria.setBearingRequired(false);
+        criteria.setCostAllowed(true);
+        provider = locationManager.getBestProvider(criteria, true);
         if (ActivityCompat.checkSelfPermission(context,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(context,
@@ -65,8 +72,8 @@ public class Geolocation implements LocationListener {
         return this;
     }
 
-    public Geolocation setLocationListener(LocationListener locationListener) {
-        this.locationListener = locationListener;
+    public Geolocation setOnApiGeolocationListener(OnApiGeolocation onApiGeolocation) {
+        this.onApiGeolocation = onApiGeolocation;
         return this;
     }
 
@@ -78,7 +85,8 @@ public class Geolocation implements LocationListener {
 
             context.startActivity(new Intent(context, RequestPermission.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         } else {
-            locationManager.requestLocationUpdates(provider, timeUpdateLocation, 0, this);
+            Log.e("GEO","StartGeo "+timeUpdateLocation);
+            locationManager.requestLocationUpdates(provider, timeUpdateLocation, 1, this);
         }
     }
 
@@ -95,8 +103,13 @@ public class Geolocation implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
 
-        if (locationListener != null) {
-            locationListener.onLocationChanged(location);
+        Log.e("GEO","GEO API CHANGE");
+
+        if(onApiGeolocation!=null){
+            Log.e("GEO","GEO CHANGE diferente null");
+            onApiGeolocation.onApiGeolocationChange(location);
+        }else{
+            Log.e("GEO","GEO CHANGE null");
         }
     }
 

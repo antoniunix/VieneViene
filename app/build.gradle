@@ -42,5 +42,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.2'
     compile 'com.android.support:design:24.+'
     compile 'com.android.support:recyclerview-v7:+'
+    compile 'de.greenrobot:eventbus:2.4.0'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -12,52 +12,88 @@ public class DtoRootLastReportsOfCar {
     private double lon;
     private double lat;
     private String dateCapture;
+    private String nameCar;
+    private String color;
+
+    public String getNameCar() {
+        return nameCar;
+    }
+
+    public void setNameCar(String nameCar) {
+        this.nameCar = nameCar;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public DtoRootLastReportsOfCar setId(int id) {
         this.id = id;
+        return this;
     }
 
     public String getBattery() {
         return battery;
     }
 
-    public void setBattery(String battery) {
+    public DtoRootLastReportsOfCar setBattery(String battery) {
         this.battery = battery;
+        return this;
     }
 
     public double getLon() {
         return lon;
     }
 
-    public void setLon(double lon) {
+    public DtoRootLastReportsOfCar setLon(double lon) {
         this.lon = lon;
+        return this;
     }
 
     public double getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public DtoRootLastReportsOfCar setLat(double lat) {
         this.lat = lat;
+        return this;
     }
 
     public String getDateCapture() {
         return dateCapture;
     }
 
-    public void setDateCapture(String dateCapture) {
+    public DtoRootLastReportsOfCar setDateCapture(String dateCapture) {
         this.dateCapture = dateCapture;
+        return this;
     }
 
     public String getHashDevice() {
         return hashDevice;
     }
 
-    public void setHashDevice(String hashDevice) {
+    public DtoRootLastReportsOfCar setHashDevice(String hashDevice) {
         this.hashDevice = hashDevice;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "DtoRootLastReportsOfCar{" +
+                "id=" + id +
+                ", hashDevice='" + hashDevice + '\'' +
+                ", battery='" + battery + '\'' +
+                ", lon=" + lon +
+                ", lat=" + lat +
+                ", dateCapture='" + dateCapture + '\'' +
+                '}';
     }
 }

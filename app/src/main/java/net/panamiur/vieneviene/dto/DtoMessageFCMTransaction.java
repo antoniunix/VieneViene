@@ -11,10 +11,20 @@ public class DtoMessageFCMTransaction {
     private String obj; // contendrá informacion adicional
     private double lat;
     private double lon;
+    private float speed;
     private String battery;
     private long time;
     private String hashDevice; //con este has se identificara al dispocitivo emitente del FCM
     private String modelDevice;
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public DtoMessageFCMTransaction setSpeed(float speed) {
+        this.speed = speed;
+        return this;
+    }
 
     public int getId() {
         return id;

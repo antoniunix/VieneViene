@@ -10,6 +10,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import net.panamiur.geolocation.Geolocation;
+import net.panamiur.geolocation.interfaces.OnApiGeolocation;
 import net.panamiur.vieneviene.dao.DaoWtdDetailDeviceToReport;
 import net.panamiur.vieneviene.dto.DtoMessageFCMTransaction;
 import net.panamiur.vieneviene.network.SendPush;
@@ -23,7 +24,7 @@ import java.io.UnsupportedEncodingException;
  * Created by gnu on 21/11/16.
  */
 
-public class ServiceGeolocation extends IntentService implements LocationListener{
+public class ServiceGeolocation extends IntentService implements OnApiGeolocation{
 
     private Geolocation geolocation;
     private int timeUpdateLocation;
@@ -36,20 +37,23 @@ public class ServiceGeolocation extends IntentService implements LocationListene
     protected void onHandleIntent(Intent intent) {
         timeUpdateLocation=intent.getIntExtra(Config.NAME_SHARE_PREFERENCE,10000);
         geolocation=Geolocation.getINSTANCE();
-        geolocation.setContext(getApplicationContext()).setLocationListener(this).setTimeUpdateLocation(timeUpdateLocation);
+        geolocation.setOnApiGeolocationListener(this).setContext(getApplication()).setTimeUpdateLocation(timeUpdateLocation);
+        geolocation.stopGeo();
         geolocation.startGeo();
-
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
 
+    @Override
+    public void onApiGeolocationChange(Location location) {
+        Log.e("GEO","GEO CHANGE");
         DtoMessageFCMTransaction msg = new DtoMessageFCMTransaction();
         msg.setId(Config.ID_KEY_REPORT_GEOLOCATION)
                 .setHashDevice(MD5.md5(Config.getIMEI(getApplicationContext())))
                 .setLat(location.getLatitude())
                 .setLon(location.getLongitude())
-                ;
+                .setSpeed(location.getSpeed())
+                .setTime(System.currentTimeMillis());
+        ;
 
         String encode = null;
         try {
@@ -60,21 +64,5 @@ public class ServiceGeolocation extends IntentService implements LocationListene
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
-    }
-
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-
     }
 }

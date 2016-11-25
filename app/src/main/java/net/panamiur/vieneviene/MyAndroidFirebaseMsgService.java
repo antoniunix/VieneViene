@@ -16,9 +16,12 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import net.panamiur.vieneviene.dao.DaoRootDetailOfCarTemp;
+import net.panamiur.vieneviene.dao.DaoRootLastReportsOfCar;
 import net.panamiur.vieneviene.dialogs.CarInDamage;
 import net.panamiur.vieneviene.dto.DtoMessageFCMTransaction;
+import net.panamiur.vieneviene.dto.DtoNewEvent;
 import net.panamiur.vieneviene.dto.DtoRootDetailOfCarTemp;
+import net.panamiur.vieneviene.dto.DtoRootLastReportsOfCar;
 import net.panamiur.vieneviene.services.ServiceDamageReport;
 import net.panamiur.vieneviene.services.ServiceGeolocation;
 import net.panamiur.vieneviene.util.Base64Code;
@@ -26,6 +29,8 @@ import net.panamiur.vieneviene.util.Config;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by gnu on 1/11/16.
@@ -40,7 +45,7 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
         DtoMessageFCMTransaction dtoMessageFCMTransaction = null;
 //        dtoMessageFCMTransaction=new DtoMessageFCMTransaction();
 //        dtoMessageFCMTransaction.setId(2);
-        Log.d(TAG, "Notification Message Body: " + remoteMessage.getMessageId());
+        Log.d(TAG, "Notification Message ID: " + remoteMessage.getMessageId());
 //        processMessage(dtoMessageFCMTransaction);
         Type typeObjectGson = new TypeToken<DtoMessageFCMTransaction>() {
         }.getType();
@@ -109,6 +114,13 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
 
                 break;
             case Config.ID_KEY_REPORT_GEOLOCATION:
+                DtoRootLastReportsOfCar dtoRootLastReportsOfCar=new DtoRootLastReportsOfCar();
+                dtoRootLastReportsOfCar.setHashDevice(dtoMessageFCMTransaction.getHashDevice())
+                        .setLat(dtoMessageFCMTransaction.getLat())
+                        .setLon(dtoMessageFCMTransaction.getLon())
+                        .setDateCapture(dtoMessageFCMTransaction.getTime()+"");
+                new DaoRootLastReportsOfCar(getApplicationContext()).insert(dtoRootLastReportsOfCar);
+                EventBus.getDefault().post(new DtoNewEvent("new geo"));
 
                 break;
         }
