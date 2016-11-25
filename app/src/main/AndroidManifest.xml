@@ -2,12 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.panamiur.vieneviene">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="net.gshp.vieneviene.MAPS_RECEIVE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
@@ -44,7 +46,8 @@
         <activity android:name=".ScanQR" />
         <activity android:name=".WatchDog" />
         <activity android:name=".BarCodeShow" />
-        <activity android:name=".DialogCompleteRegister" />
+        <activity android:name=".DialogCompleteRegister"
+            android:launchMode= "singleInstance"/>
         <activity android:name=".HomeMap" />
         <activity
             android:name=".dialogs.CarInDamage"

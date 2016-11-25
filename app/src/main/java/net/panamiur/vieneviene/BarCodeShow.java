@@ -26,7 +26,6 @@ public class BarCodeShow extends AppCompatActivity {
 
     private ImageView img_qr_wd;
     private ModelBarCodeShow model;
-    private EditText txttemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,6 @@ public class BarCodeShow extends AppCompatActivity {
     private void init(){
         model=new ModelBarCodeShow(this);
         img_qr_wd=(ImageView)findViewById(R.id.img_qr_wd);
-        txttemp=(EditText)findViewById(R.id.txttemp);
 
         try {
             img_qr_wd.setImageBitmap(model.getQrOfText());
@@ -51,20 +49,20 @@ public class BarCodeShow extends AppCompatActivity {
         finish();
     }
 
-    public void onClicktmp(View v){
-        DtoMessageFCMTransaction msg = new DtoMessageFCMTransaction();
-        msg.setId(Config.ID_KEY_MONITORING_SLAM)
-                .setObj(txttemp.getText().toString())
-                .setHashDevice(MD5.md5(Config.getIMEI(this)));
-
-        String encode = null;
-        try {
-            encode = Base64Code.encode(new Gson().toJson(msg));
-            new SendPush(getApplicationContext())
-                    .sendPushToDevice("f6lQOZNTRdA:APA91bHVTXfhukdkZuG5AfpUTwStFbGDq3pxyOUSgRZxGOMbGeHubt8VcDhyo7AvAFzYCuVUD11WMUfOACK5E1NAbj3wjEhkh5yUFeXxM9CMhXpu9e1eJvv1B_ikvuoBUG_juYmCbSox", encode);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        //startService(new Intent(this, ServiceGeolocation.class));
-    }
+//    public void onClicktmp(View v){
+//        DtoMessageFCMTransaction msg = new DtoMessageFCMTransaction();
+//        msg.setId(Config.ID_KEY_MONITORING_SLAM)
+//                .setObj(txttemp.getText().toString())
+//                .setHashDevice(MD5.md5(Config.getIMEI(this)));
+//
+//        String encode = null;
+//        try {
+//            encode = Base64Code.encode(new Gson().toJson(msg));
+//            new SendPush(getApplicationContext())
+//                    .sendPushToDevice("f6lQOZNTRdA:APA91bHVTXfhukdkZuG5AfpUTwStFbGDq3pxyOUSgRZxGOMbGeHubt8VcDhyo7AvAFzYCuVUD11WMUfOACK5E1NAbj3wjEhkh5yUFeXxM9CMhXpu9e1eJvv1B_ikvuoBUG_juYmCbSox", encode);
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        //startService(new Intent(this, ServiceGeolocation.class));
+//    }
 }

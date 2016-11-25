@@ -9,8 +9,8 @@ public class DtoMessageFCMTransaction {
 
     private int id; // es el que define el tipo de mensaje
     private String obj; // contendrá informacion adicional
-    private long lat;
-    private long lon;
+    private double lat;
+    private double lon;
     private String battery;
     private long time;
     private String hashDevice; //con este has se identificara al dispocitivo emitente del FCM
@@ -34,20 +34,20 @@ public class DtoMessageFCMTransaction {
         return this;
     }
 
-    public long getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public DtoMessageFCMTransaction setLat(long lat) {
+    public DtoMessageFCMTransaction setLat(double lat) {
         this.lat = lat;
         return this;
     }
 
-    public long getLon() {
+    public double getLon() {
         return lon;
     }
 
-    public DtoMessageFCMTransaction setLon(long lon) {
+    public DtoMessageFCMTransaction setLon(double lon) {
         this.lon = lon;
         return this;
     }

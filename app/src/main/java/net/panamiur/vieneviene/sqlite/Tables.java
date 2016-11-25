@@ -20,7 +20,8 @@ public class Tables {
             "phone_number TEXT," +
             "description TEXT," +
             "model_device TEXT," +
-            "date_create TEXT)";
+            "date_create TEXT," +
+            "sensitive_movement REAL)";
 
     public final String TABLE_ROOT_LAST_REPORTS_OF_CAR="CREATE TABLE root_last_reports_of_car(" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +

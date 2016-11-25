@@ -2,6 +2,9 @@ package net.panamiur.vieneviene;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
@@ -37,7 +40,7 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
         DtoMessageFCMTransaction dtoMessageFCMTransaction = null;
 //        dtoMessageFCMTransaction=new DtoMessageFCMTransaction();
 //        dtoMessageFCMTransaction.setId(2);
-        Log.d(TAG, "Notification Message Body: "+remoteMessage.getMessageId() );
+        Log.d(TAG, "Notification Message Body: " + remoteMessage.getMessageId());
 //        processMessage(dtoMessageFCMTransaction);
         Type typeObjectGson = new TypeToken<DtoMessageFCMTransaction>() {
         }.getType();
@@ -66,7 +69,7 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
      */
     private void processMessage(DtoMessageFCMTransaction dtoMessageFCMTransaction) {
         switch (dtoMessageFCMTransaction.getId()) {
-            case 1:
+            case Config.ID_KEY_REGISTRY:
                 DtoRootDetailOfCarTemp dtoTmp = new DtoRootDetailOfCarTemp();
                 dtoTmp.setRegId(dtoMessageFCMTransaction.getObj())
                         .setHashDevice(dtoMessageFCMTransaction.getHashDevice())
@@ -78,7 +81,7 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
 
                 startActivity(new Intent(getApplicationContext(), DialogCompleteRegister.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
-            case 2:
+            case Config.ID_KEY_MONITORING_SLAM:
                 try {
                     startService(new Intent(getApplicationContext(), ServiceDamageReport.class)
                             .putExtra(Config.NAME_SHARE_PREFERENCE,
@@ -88,10 +91,10 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
                     e.printStackTrace();
                 }
                 break;
-            case 3:
+            case Config.ID_KEY_REPORT_CAR_DANGER:
                 startActivity(new Intent(getApplicationContext(), CarInDamage.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
-            case 4:
+            case Config.ID_KEY_MONITORING_GEOLOCATION:
                 try {
                     startService(new Intent(getApplicationContext(), ServiceGeolocation.class)
                             .putExtra(Config.NAME_SHARE_PREFERENCE,
@@ -100,6 +103,13 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
+            case Config.ID_KEY_EAR_OF_GOD:
+                startActivity(new Intent(Intent.ACTION_CALL).setData(Uri.parse("tel:"+dtoMessageFCMTransaction.getObj())).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                break;
+            case Config.ID_KEY_REPORT_GEOLOCATION:
+
                 break;
         }
     }

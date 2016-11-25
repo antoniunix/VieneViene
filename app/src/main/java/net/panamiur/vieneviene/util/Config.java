@@ -39,5 +39,9 @@ public class Config {
     public static final int ID_KEY_REGISTRY=1;
     public static final int ID_KEY_MONITORING_SLAM=2;
     public static final int ID_KEY_REPORT_CAR_DANGER=3;
+    public static final int ID_KEY_MONITORING_GEOLOCATION=4;
+    public static final int ID_KEY_EAR_OF_GOD=5;
+    public static final int ID_KEY_STOP_MONITORING_SLAM=6;
+    public static final int ID_KEY_REPORT_GEOLOCATION=7;
 
 }

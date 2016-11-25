@@ -1,12 +1,20 @@
 package net.panamiur.vieneviene.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 
 import net.panamiur.vieneviene.dto.DtoRootDetailOfCar;
+import net.panamiur.vieneviene.dto.DtoRootDetailOfCarTemp;
 import net.panamiur.vieneviene.sqlite.AppDb;
+
+import java.io.IOError;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by gnu on 17/11/16.
@@ -17,35 +25,37 @@ public class DaoRootDetailOfCar {
     private SQLiteDatabase db;
     private Cursor cursor;
 
-    public static String TABLE_NAME="root_detail_of_car";
-    public static String PK_FIELD="_id";
+    public static String TABLE_NAME = "root_detail_of_car";
+    public static String PK_FIELD = "_id";
 
-    private final String ID="_id";
-    private final String HASH_DEVICE="hash_device";
-    private final String REG_ID="reg_id";
-    private final String NAME_CAR="name_car";
-    private final String COLOR="color";
-    private final String PHONE_NUMBER="phone_number";
-    private final String DESCRIPTION="description";
-    private final String DATE_CREATE="date_create";
-    private final String MODEL_DEVICE="model_device";
+    private final String ID = "_id";
+    private final String HASH_DEVICE = "hash_device";
+    private final String REG_ID = "reg_id";
+    private final String NAME_CAR = "name_car";
+    private final String COLOR = "color";
+    private final String PHONE_NUMBER = "phone_number";
+    private final String DESCRIPTION = "description";
+    private final String DATE_CREATE = "date_create";
+    private final String MODEL_DEVICE = "model_device";
+    private final String SENSITIVE_MOVEMENT = "sensitive_movement";
 
     public DaoRootDetailOfCar(Context context) {
-        helper=new AppDb(context);
+        helper = new AppDb(context);
     }
 
     /**
      * Insert
      */
-    public int insert( DtoRootDetailOfCar obj)
-    {
+    public int insert(DtoRootDetailOfCar obj) {
         db = helper.getWritableDatabase();
-        int resp=0;
+        int resp = 0;
         try {
 
-            SQLiteStatement insStmnt=db.compileStatement("" +
+            SQLiteStatement insStmnt = db.compileStatement("" +
                     "INSERT INTO " +
-                    TABLE_NAME+" ("+HASH_DEVICE+","+REG_ID+","+NAME_CAR+","+COLOR+","+PHONE_NUMBER+","+DESCRIPTION+","+DATE_CREATE+","+MODEL_DEVICE+") VALUES(?,?,?,?,?,?,?,?);");
+                    TABLE_NAME + " (" + HASH_DEVICE + "," + REG_ID + "," + NAME_CAR + "," + COLOR
+                                + "," + PHONE_NUMBER + "," + DESCRIPTION + "," + DATE_CREATE + ","
+                                + MODEL_DEVICE +","+SENSITIVE_MOVEMENT+ ") VALUES(?,?,?,?,?,?,?,?,?);");
             db.beginTransaction();
             try {
                 insStmnt.bindString(1, obj.getHashDevice());
@@ -87,31 +97,116 @@ public class DaoRootDetailOfCar {
             } catch (Exception e) {
                 insStmnt.bindNull(8);
             }
+            try {
+                insStmnt.bindDouble(9, obj.getSensitiveMovement());
+            } catch (Exception e) {
+                insStmnt.bindNull(9);
+            }
             insStmnt.executeInsert();
             db.setTransactionSuccessful();
         } catch (Exception e) {
             System.out.println("error db");
             e.printStackTrace();
-        }
-        finally
-        {
+        } finally {
             db.endTransaction();
         }
         db.close();
         return resp;
     }
 
+    public int update(DtoRootDetailOfCar dto) {
 
-    public int delete(String hashDevice)
-    {
-        int resp=0;
+        db = helper.getWritableDatabase();
+        int isUpdate=0;
+        try {
+
+            ContentValues values = new ContentValues();
+            values.put(NAME_CAR, dto.getNameCar());
+            values.put(COLOR, dto.getColor());
+            values.put(PHONE_NUMBER, dto.getPhoneNumber());
+            values.put(DESCRIPTION, dto.getDescription());
+            values.put(SENSITIVE_MOVEMENT, dto.getSensitiveMovement());
+
+            isUpdate = db.update(TABLE_NAME,
+                    values,
+                    HASH_DEVICE + "='" + dto.getHashDevice()+"'", null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            db.close();
+        }
+        return isUpdate;
+    }
+
+
+    public List<DtoRootDetailOfCar> select() {
+        db = helper.getWritableDatabase();
+        cursor = db.rawQuery("SELECT DISTINCT\n" +
+                "root_detail_of_car._id,\n" +
+                "root_detail_of_car.hash_device,\n" +
+                "root_detail_of_car.reg_id,\n" +
+                "root_detail_of_car.name_car,\n" +
+                "root_detail_of_car.color,\n" +
+                "root_detail_of_car.phone_number,\n" +
+                "root_detail_of_car.description,\n" +
+                "root_detail_of_car.model_device,\n" +
+                "root_detail_of_car.date_create,\n" +
+                "root_detail_of_car.sensitive_movement,\n" +
+                "root_last_reports_of_car.battery\n" +
+                "FROM\n" +
+                "root_detail_of_car\n" +
+                "LEFT JOIN root_last_reports_of_car ON root_last_reports_of_car.hash_device=root_detail_of_car.hash_device\n" +
+                "GROUP BY root_detail_of_car.hash_device\n" +
+                "ORDER BY root_detail_of_car._id", null);
+
+        List<DtoRootDetailOfCar> lst = new ArrayList<>(cursor.getCount());
+        DtoRootDetailOfCar dto;
+
+        int numColum_id = cursor.getColumnIndexOrThrow("_id");
+        int numColum_hash_device = cursor.getColumnIndexOrThrow("hash_device");
+        int numColum_reg_id = cursor.getColumnIndexOrThrow("reg_id");
+        int numColum_name_car = cursor.getColumnIndexOrThrow("name_car");
+        int numColum_color = cursor.getColumnIndexOrThrow("color");
+        int numColum_phone_number = cursor.getColumnIndexOrThrow("phone_number");
+        int numColum_description = cursor.getColumnIndexOrThrow("description");
+        int numColum_model_device = cursor.getColumnIndexOrThrow("model_device");
+        int numColum_date_create = cursor.getColumnIndexOrThrow("date_create");
+        int numColum_battery = cursor.getColumnIndexOrThrow("battery");
+        int numColum_sensitive_movement = cursor.getColumnIndexOrThrow("sensitive_movement");
+
+        if (cursor.moveToFirst()) {
+            do {
+                dto = new DtoRootDetailOfCar();
+                dto.setId(cursor.getInt(numColum_id));
+                dto.setHashDevice(cursor.getString(numColum_hash_device));
+                dto.setRegId(cursor.getString(numColum_reg_id));
+                dto.setNameCar(cursor.getString(numColum_name_car));
+                dto.setColor(cursor.getString(numColum_color));
+                dto.setPhoneNumber(cursor.getString(numColum_phone_number));
+                dto.setDescription(cursor.getString(numColum_description));
+                dto.setModelDevice(cursor.getString(numColum_model_device));
+                dto.setBatteryLevel(cursor.getLong(numColum_battery));
+                dto.setSensitiveMovement(cursor.getLong(numColum_sensitive_movement));
+                dto.setDateCreate(cursor.getString(numColum_date_create));
+                lst.add(dto);
+
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+        db.close();
+        return lst;
+    }
+
+
+    public int delete(String hashDevice) {
+        int resp = 0;
         try {
             db = helper.getWritableDatabase();
-            resp = db.delete(TABLE_NAME, "hash_device='"+hashDevice+"'", null);
+            resp = db.delete(TABLE_NAME, "hash_device='" + hashDevice + "'", null);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally{
+        } finally {
             db.close();
         }
         return resp;

@@ -3,6 +3,7 @@ package net.panamiur.vieneviene.sqlite;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 
 import net.panamiur.vieneviene.util.Config;
 
@@ -15,7 +16,7 @@ public class AppDb extends SQLiteOpenHelper {
     private Tables tablas;
 
     public AppDb(Context context) {
-        super(context, Config.DB_NAME, null, Config.VERSION_DB);
+        super(context, Environment.getExternalStorageDirectory()+"/VIENEVIENE/"+Config.DB_NAME, null, Config.VERSION_DB);
         tablas = new Tables();
     }
 

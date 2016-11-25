@@ -1,10 +1,13 @@
 package net.panamiur.vieneviene.dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by gnu on 17/11/16.
  */
 
-public class DtoRootDetailOfCar {
+public class DtoRootDetailOfCar implements Parcelable {
     private int id;
     private String hashDevice;
     private String regId;
@@ -14,6 +17,16 @@ public class DtoRootDetailOfCar {
     private String description;
     private String dateCreate;
     private String modelDevice;
+    private long batteryLevel;
+    private float sensitiveMovement;
+
+    public float getSensitiveMovement() {
+        return sensitiveMovement;
+    }
+
+    public void setSensitiveMovement(float sensitiveMovement) {
+        this.sensitiveMovement = sensitiveMovement;
+    }
 
     public int getId() {
         return id;
@@ -95,4 +108,60 @@ public class DtoRootDetailOfCar {
         this.modelDevice = modelDevice;
         return this;
     }
+
+    public long getBatteryLevel() {
+        return batteryLevel;
+    }
+
+    public DtoRootDetailOfCar setBatteryLevel(long batteryLevel) {
+        this.batteryLevel = batteryLevel;
+        return this;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.hashDevice);
+        dest.writeString(this.regId);
+        dest.writeString(this.nameCar);
+        dest.writeString(this.color);
+        dest.writeString(this.phoneNumber);
+        dest.writeString(this.description);
+        dest.writeString(this.dateCreate);
+        dest.writeString(this.modelDevice);
+        dest.writeLong(this.batteryLevel);
+    }
+
+    public DtoRootDetailOfCar() {
+    }
+
+    protected DtoRootDetailOfCar(Parcel in) {
+        this.id = in.readInt();
+        this.hashDevice = in.readString();
+        this.regId = in.readString();
+        this.nameCar = in.readString();
+        this.color = in.readString();
+        this.phoneNumber = in.readString();
+        this.description = in.readString();
+        this.dateCreate = in.readString();
+        this.modelDevice = in.readString();
+        this.batteryLevel = in.readLong();
+    }
+
+    public static final Parcelable.Creator<DtoRootDetailOfCar> CREATOR = new Parcelable.Creator<DtoRootDetailOfCar>() {
+        @Override
+        public DtoRootDetailOfCar createFromParcel(Parcel source) {
+            return new DtoRootDetailOfCar(source);
+        }
+
+        @Override
+        public DtoRootDetailOfCar[] newArray(int size) {
+            return new DtoRootDetailOfCar[size];
+        }
+    };
 }

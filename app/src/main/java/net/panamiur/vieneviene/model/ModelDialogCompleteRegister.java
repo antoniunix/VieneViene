@@ -1,6 +1,7 @@
 package net.panamiur.vieneviene.model;
 
 import android.content.Context;
+import android.util.Log;
 
 import net.panamiur.vieneviene.dao.DaoRootDetailOfCar;
 import net.panamiur.vieneviene.dao.DaoRootDetailOfCarTemp;
@@ -29,6 +30,9 @@ public class ModelDialogCompleteRegister {
     public void registerDevice(DtoRootDetailOfCar dto){
 
         new DaoRootDetailOfCarTemp(context).delete(dto.getHashDevice());
-        new DaoRootDetailOfCar(context).insert(dto);
+        DaoRootDetailOfCar daoRootDetailOfCar=new DaoRootDetailOfCar(context);
+        if(daoRootDetailOfCar.update(dto)==0){
+            daoRootDetailOfCar.insert(dto);
+        }
     }
 }
