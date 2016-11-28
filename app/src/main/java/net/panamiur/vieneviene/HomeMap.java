@@ -31,10 +31,18 @@ import com.google.android.gms.maps.OnMapReadyCallback;
  */
 public class HomeMap extends AppCompatActivity implements
         Toolbar.OnMenuItemClickListener,
-        OnMapReadyCallback{
+        OnMapReadyCallback,
+        GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks,
+        LocationListener
+{
 
     private Toolbar toolbar;
-
+    private GoogleApiClient googleApiClient;
+    private Location lastLocation;
+    private LocationRequest locationRequest;
+    private final int UPDATE_INTERTVAL = 1000;
+    private final int FASTEST_INTERVAL= 900;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +56,7 @@ public class HomeMap extends AppCompatActivity implements
         toolbar.setOnMenuItemClickListener(this);
         MapFragment mapFragment=(MapFragment)getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        createGoogleMapApi();
 
     }
 
@@ -75,4 +84,49 @@ public class HomeMap extends AppCompatActivity implements
 
     }
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    private void createGoogleMapApi(){
+        if(googleApiClient== null){
+            googleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        googleApiClient.disconnect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        googleApiClient.disconnect();
+    }
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+    }
+
+
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
 }
