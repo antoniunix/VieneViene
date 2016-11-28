@@ -3,6 +3,7 @@ package net.panamiur.vieneviene.model;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -88,7 +89,9 @@ public class ModelScanQr {
         DtoMessageFCMTransaction msg=new DtoMessageFCMTransaction();
         msg.setId(Config.ID_KEY_REGISTRY)
                 .setObj(getRegIdWatchDog())
-                .setHashDevice(MD5.md5(Config.getIMEI(context)));
+                .setHashDevice(MD5.md5(Config.getIMEI(context)))
+                .setModelDevice(Build.BRAND+" "+android.os.Build.MODEL);
+
         String encode= Base64Code.encode(new Gson().toJson(msg));
         new SendPush(context).sendPushToDevice(new DaoWtdDetailDeviceToReport(context).select().getRegId(),encode);
     }

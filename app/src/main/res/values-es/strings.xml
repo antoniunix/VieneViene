@@ -17,8 +17,20 @@
     <!--Home Map-->
     <string name="title_menu_add_car">Agregar nuevo coche</string>
     <string name="title_menu_config">configuración</string>
+    <string name="warning_ear_of_god">Debe asignar un número telefonico</string>
 
     <!--GENERIC STRING-->
     <string name="button_bcs_continue">Continuar</string>
+    <string name="button_save">Guardar </string>
+    
+    <!--DialogCompleteRegister-->
+    <string name="label_name_car">Nombre del automovil</string>
+    <string name="label_phone_number">Numero de telefono</string>
+    <string name="label_description">Descripcion </string>
+    <string name="label_sensibility">Sensibilidad de movimiento</string>
+
+    <!--ServiceDamageReport-->
+    <string name="alert_title_car_in_danger">COCHE EN PELIGRO</string>
+    <string name="alert_car_in_danger">¡Atencion, su coche acaba de ser golpeado por un objeto!</string>
 
 </resources>

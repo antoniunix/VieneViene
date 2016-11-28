@@ -1,10 +1,15 @@
 package net.panamiur.vieneviene;
 
 import android.content.Intent;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import net.panamiur.geolocation.Geolocation;
+import net.panamiur.geolocation.interfaces.OnApiGeolocation;
+import net.panamiur.movementreport.Movement;
 import net.panamiur.vieneviene.model.ModelSelectRollDevice;
 import net.panamiur.vieneviene.util.Config;
 
@@ -34,4 +39,5 @@ public class SelectRollDevice extends AppCompatActivity {
         model.setRoleToSharePreference(Config.ROL_ROOT);
         finish();
     }
+
 }

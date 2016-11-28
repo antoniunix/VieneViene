@@ -12,6 +12,7 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.gson.stream.MalformedJsonException;
 
+import net.panamiur.movementreport.Movement;
 import net.panamiur.readwriteqr.barcode.BarcodeCaptureActivity;
 import net.panamiur.vieneviene.model.ModelScanQr;
 
@@ -48,95 +49,6 @@ public class ScanQR extends AppCompatActivity {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         startActivity(new Intent(this, WatchDog.class));
         finish();

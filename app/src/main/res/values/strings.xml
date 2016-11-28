@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">VieneViene</string>
+    <string name="title_activity_car_in_damage">CarInDamage</string>
     <string name="google_maps_api_key" translatable="false">AIzaSyAK6_HYgZTnxUoMSP9jJuu3rJyQ2noT2Sw</string>
 </resources>

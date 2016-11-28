@@ -35,10 +35,13 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:9.0.2'
     compile 'com.android.support:multidex:+'
     compile project(':readwriteqr')
+    compile project(':movementreport')
+    compile project(':geolocation')
     testCompile 'junit:junit:4.12'
     compile 'com.facebook.stetho:stetho:1.1.1'
     compile 'com.google.code.gson:gson:2.2.2'
     compile 'com.android.support:design:24.+'
-
+    compile 'com.android.support:recyclerview-v7:+'
+    compile 'de.greenrobot:eventbus:2.4.0'
 }
 apply plugin: 'com.google.gms.google-services'

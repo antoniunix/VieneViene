@@ -1,1 +1,1 @@
-include ':app', ':readwriteqr'
+include ':app', ':readwriteqr', ':movementreport', ':geolocation'
