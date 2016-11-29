@@ -42,7 +42,7 @@ public class Geolocation implements LocationListener {
         this.context = context;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setAccuracy(Criteria.ACCURACY_MEDIUM);
         criteria.setAltitudeRequired(false);
         criteria.setBearingRequired(false);
         criteria.setCostAllowed(true);
@@ -55,6 +55,7 @@ public class Geolocation implements LocationListener {
             context.startActivity(new Intent(context, RequestPermission.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
         } else {
+            Log.e("provider",provider);
             location = locationManager.getLastKnownLocation(provider);
         }
 

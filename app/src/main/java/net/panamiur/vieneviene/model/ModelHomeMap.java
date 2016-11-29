@@ -1,6 +1,7 @@
 package net.panamiur.vieneviene.model;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -77,12 +78,39 @@ public class ModelHomeMap {
             e.printStackTrace();
         }
     }
+    public void stopMovementSensor(DtoRootDetailOfCar dto) {
+        DtoMessageFCMTransaction msg = new DtoMessageFCMTransaction();
+        msg.setId(Config.ID_KEY_STOP_MONITORING_SLAM)
+                .setHashDevice(MD5.md5(Config.getIMEI(context)));
+        String encode = null;
+        try {
+            encode = Base64Code.encode(new Gson().toJson(msg));
+            new SendPush(context)
+                    .sendPushToDevice(dto.getRegId(), encode);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void startGeolocation(DtoRootDetailOfCar dto) {
         DtoMessageFCMTransaction msg = new DtoMessageFCMTransaction();
         msg.setId(Config.ID_KEY_MONITORING_GEOLOCATION)
                 .setHashDevice(MD5.md5(Config.getIMEI(context)))
                 .setObj(30000 + "");
+
+        String encode = null;
+        try {
+            encode = Base64Code.encode(new Gson().toJson(msg));
+            new SendPush(context)
+                    .sendPushToDevice(dto.getRegId(), encode);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+    public void stopGeolocation(DtoRootDetailOfCar dto) {
+        DtoMessageFCMTransaction msg = new DtoMessageFCMTransaction();
+        msg.setId(Config.ID_KEY_STOP_MONITORING_GEOLOCATION)
+                .setHashDevice(MD5.md5(Config.getIMEI(context)));
 
         String encode = null;
         try {
@@ -111,4 +139,13 @@ public class ModelHomeMap {
             }
         }
     }
+
+    public void changeStatusActiveGeolocation(DtoRootDetailOfCar dto,boolean active){
+        new DaoRootDetailOfCar(context).changeStatusGeo(dto,active);
+    }
+
+    public void changeStatusActiveMovement(DtoRootDetailOfCar dto,boolean active){
+        new DaoRootDetailOfCar(context).changeStatusMovement(dto,active);
+    }
+
 }

@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import net.panamiur.vieneviene.adapter.AdapterListCar;
 import net.panamiur.vieneviene.dto.DtoNewEvent;
 import net.panamiur.vieneviene.dto.DtoRootDetailOfCar;
 import net.panamiur.vieneviene.model.ModelHomeMap;
@@ -66,6 +67,7 @@ public class HomeMap extends AppCompatActivity implements
     private ListView lst_car;
     private DrawerLayout drawer_layout;
     private GoogleMap mMap;
+    private AdapterListCar adapter;
 
 
     @Override
@@ -91,7 +93,8 @@ public class HomeMap extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        lst_car.setAdapter(model.getAdapterDetailOfCar(this, this));
+        adapter=model.getAdapterDetailOfCar(this, this);
+        lst_car.setAdapter(adapter);
     }
 
     @Override
@@ -150,18 +153,21 @@ public class HomeMap extends AppCompatActivity implements
 
         if (compoundButton.getId() == R.id.swt_active) {
             DtoRootDetailOfCar dto = (DtoRootDetailOfCar) compoundButton.getTag();
+            model.changeStatusActiveMovement(dto,b);
             if (b) {
                 model.startMovementSensor(dto);
             } else {
-
+                model.stopMovementSensor(dto);
             }
 
         } else if (compoundButton.getId() == R.id.swt_active_geo) {
             DtoRootDetailOfCar dto = (DtoRootDetailOfCar) compoundButton.getTag();
+            model.changeStatusActiveGeolocation(dto,b);
+            adapter.notifyDataSetChanged();
             if (b) {
                 model.startGeolocation(dto);
             } else {
-
+                model.stopGeolocation(dto);
             }
         }
 

@@ -23,7 +23,5 @@ public class ModelSelectRollDevice {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(Config.ITEM_SHP_ROLE, bRole);
         editor.commit();
-
-
     }
 }

@@ -27,6 +27,7 @@ public class DaoRootLastReportsOfCar {
     private final String ID="_id";
     private final String HASH_DEVICE="hash_device";
     private final String BATTERY="battery";
+    private final String SPEED="speed";
     private final String LON="lon";
     private final String LAT="lat";
     private final String DATE_CAPTURE="date_capture";
@@ -46,7 +47,7 @@ public class DaoRootLastReportsOfCar {
 
             SQLiteStatement insStmnt=db.compileStatement("" +
                     "INSERT INTO " +
-                    TABLE_NAME+" ("+HASH_DEVICE+","+BATTERY+","+LON+","+LAT+","+DATE_CAPTURE+") VALUES(?,?,?,?,?);");
+                    TABLE_NAME+" ("+HASH_DEVICE+","+BATTERY+","+LON+","+LAT+","+DATE_CAPTURE+","+SPEED+") VALUES(?,?,?,?,?,?);");
             db.beginTransaction();
             try {
                 insStmnt.bindString(1, obj.getHashDevice());
@@ -72,6 +73,11 @@ public class DaoRootLastReportsOfCar {
                 insStmnt.bindString(5, obj.getDateCapture());
             } catch (Exception e) {
                 insStmnt.bindNull(5);
+            }
+            try {
+                insStmnt.bindString(6, obj.getSpeed());
+            } catch (Exception e) {
+                insStmnt.bindNull(6);
             }
             insStmnt.executeInsert();
             db.setTransactionSuccessful();

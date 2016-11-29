@@ -43,5 +43,6 @@ public class Config {
     public static final int ID_KEY_EAR_OF_GOD=5;
     public static final int ID_KEY_STOP_MONITORING_SLAM=6;
     public static final int ID_KEY_REPORT_GEOLOCATION=7;
+    public static final int ID_KEY_STOP_MONITORING_GEOLOCATION=8;
 
 }

@@ -26,7 +26,9 @@ public class Movement implements SensorEventListener {
     private float sensibility = 0.80f;
     private OnSlamListener onSlamListener;
 
+
     private Movement() {
+        Log.e("init","movement se crea");
     }
 
     public static Movement getInstance() {
@@ -69,8 +71,8 @@ public class Movement implements SensorEventListener {
 
     public void stopService() {
         if (sensorManager != null) {
-            sensorManager.unregisterListener(this);
-
+            Log.d("init", "STOP MOVEMENT");
+            sensorManager.unregisterListener(this,sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
         }
     }
 

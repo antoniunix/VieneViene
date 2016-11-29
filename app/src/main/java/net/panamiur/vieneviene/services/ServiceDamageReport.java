@@ -41,10 +41,9 @@ public class ServiceDamageReport extends IntentService implements OnSlamListener
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        sensibility = intent.getFloatExtra(Config.NAME_SHARE_PREFERENCE, 0.8f);
+        sensibility = intent.getFloatExtra(Config.NAME_SHARE_PREFERENCE, 1.0f);
         movement = Movement.getInstance();
         movement.setContext(getApplicationContext()).setOnSlamListener(this).setSensibility(sensibility);
-        movement.stopService();
         movement.initService();
     }
 

@@ -9,11 +9,20 @@ public class DtoRootLastReportsOfCar {
     private int id;
     private String hashDevice;
     private String battery;
+    private String speed;
     private double lon;
     private double lat;
     private String dateCapture;
     private String nameCar;
     private String color;
+
+    public String getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(String speed) {
+        this.speed = speed;
+    }
 
     public String getNameCar() {
         return nameCar;

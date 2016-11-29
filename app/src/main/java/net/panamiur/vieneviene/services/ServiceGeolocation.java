@@ -53,6 +53,7 @@ public class ServiceGeolocation extends IntentService implements OnApiGeolocatio
                 .setLon(location.getLongitude())
                 .setSpeed(location.getSpeed())
                 .setTime(System.currentTimeMillis());
+
         ;
 
         String encode = null;

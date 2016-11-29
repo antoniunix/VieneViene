@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+import net.panamiur.geolocation.Geolocation;
+import net.panamiur.movementreport.Movement;
 import net.panamiur.vieneviene.dao.DaoRootDetailOfCarTemp;
 import net.panamiur.vieneviene.dao.DaoRootLastReportsOfCar;
 import net.panamiur.vieneviene.dialogs.CarInDamage;
@@ -113,6 +115,10 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
                 startActivity(new Intent(Intent.ACTION_CALL).setData(Uri.parse("tel:"+dtoMessageFCMTransaction.getObj())).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
                 break;
+            case Config.ID_KEY_STOP_MONITORING_SLAM:
+                Movement.getInstance().stopService();
+//                getApplicationContext().stopService(new Intent(getApplicationContext(),ServiceDamageReport.class));
+                break;
             case Config.ID_KEY_REPORT_GEOLOCATION:
                 DtoRootLastReportsOfCar dtoRootLastReportsOfCar=new DtoRootLastReportsOfCar();
                 dtoRootLastReportsOfCar.setHashDevice(dtoMessageFCMTransaction.getHashDevice())
@@ -122,6 +128,9 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
                 new DaoRootLastReportsOfCar(getApplicationContext()).insert(dtoRootLastReportsOfCar);
                 EventBus.getDefault().post(new DtoNewEvent("new geo"));
 
+                break;
+            case Config.ID_KEY_STOP_MONITORING_GEOLOCATION:
+                Geolocation.getINSTANCE().stopGeo();
                 break;
         }
     }

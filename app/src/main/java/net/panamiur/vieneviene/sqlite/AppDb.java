@@ -16,7 +16,7 @@ public class AppDb extends SQLiteOpenHelper {
     private Tables tablas;
 
     public AppDb(Context context) {
-        super(context, Environment.getExternalStorageDirectory()+"/VIENEVIENE/"+Config.DB_NAME, null, Config.VERSION_DB);
+        super(context, /*Environment.getExternalStorageDirectory()+"/VIENEVIENE/"+*/Config.DB_NAME, null, Config.VERSION_DB);
         tablas = new Tables();
     }
 

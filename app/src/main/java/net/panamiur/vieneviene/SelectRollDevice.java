@@ -32,6 +32,10 @@ public class SelectRollDevice extends AppCompatActivity {
         startActivity(new Intent(this,ScanQR.class));
         model.setRoleToSharePreference(Config.ROL_WATCH_DOG);
         finish();
+//        Geolocation geolocation=Geolocation.getINSTANCE();
+//        geolocation.setOnApiGeolocationListener(this).setContext(getApplication()).setTimeUpdateLocation(10000);
+//        geolocation.stopGeo();
+//        geolocation.startGeo();
     }
 
     public void onClickRoot(View v){

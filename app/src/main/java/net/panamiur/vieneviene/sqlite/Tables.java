@@ -21,12 +21,15 @@ public class Tables {
             "description TEXT," +
             "model_device TEXT," +
             "date_create TEXT," +
-            "sensitive_movement REAL)";
+            "sensitive_movement REAL," +
+            "is_geo_active INTEGER," +
+            "is_movement_active INTEGER)";
 
     public final String TABLE_ROOT_LAST_REPORTS_OF_CAR="CREATE TABLE root_last_reports_of_car(" +
             "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
             "hash_device TEXT," +
-            "battery INTEGER," +
+            "battery REAL," +
+            "speed REAL," +
             "lon TEXT," +
             "lat TEXT," +
             "date_capture TEXT)";

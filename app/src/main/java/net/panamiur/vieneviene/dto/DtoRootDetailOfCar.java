@@ -19,6 +19,34 @@ public class DtoRootDetailOfCar implements Parcelable {
     private String modelDevice;
     private long batteryLevel;
     private float sensitiveMovement;
+    private float speed;
+    private boolean isGeoActived;
+    private boolean isMovementActived;
+
+
+    public boolean isGeoActived() {
+        return isGeoActived;
+    }
+
+    public void setGeoActived(boolean geoActived) {
+        isGeoActived = geoActived;
+    }
+
+    public boolean isMovementActived() {
+        return isMovementActived;
+    }
+
+    public void setMovementActived(boolean movementActived) {
+        isMovementActived = movementActived;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
 
     public float getSensitiveMovement() {
         return sensitiveMovement;

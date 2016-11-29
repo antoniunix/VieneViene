@@ -15,6 +15,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/txt_speed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
         <ImageButton
             android:id="@+id/btn_ear_of_good"

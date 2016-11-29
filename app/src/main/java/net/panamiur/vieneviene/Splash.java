@@ -2,10 +2,13 @@ package net.panamiur.vieneviene;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.facebook.stetho.Stetho;
+
+import net.panamiur.vieneviene.util.Config;
 
 import java.lang.ref.WeakReference;
 import java.util.Timer;
@@ -45,7 +48,18 @@ public class Splash extends AppCompatActivity {
                 public void run() {
                     Splash activity = weakReference.get();
                     if (activity != null && !activity.isFinishing()) {
-                        startActivity(new Intent(context, SelectRollDevice.class));
+
+                        switch (getRole()){
+                            case Config.ROL_ROOT:
+                                startActivity(new Intent(context, HomeMap.class));
+                                break;
+                            case Config.ROL_WATCH_DOG:
+                                startActivity(new Intent(context, WatchDog.class));
+                                break;
+                            default:
+                                startActivity(new Intent(context, SelectRollDevice.class));
+                                break;
+                        }
                         finish();
                     }
                 }
@@ -53,5 +67,10 @@ public class Splash extends AppCompatActivity {
             timer.schedule(timerTask, TIME_OF_SHOW_VIDEO);
 
         super.onResume();
+    }
+
+    private int getRole(){
+        SharedPreferences sharedPref = context.getSharedPreferences(Config.NAME_SHARE_PREFERENCE, Context.MODE_PRIVATE);
+        return sharedPref.getInt(Config.ITEM_SHP_ROLE,0);
     }
 }
