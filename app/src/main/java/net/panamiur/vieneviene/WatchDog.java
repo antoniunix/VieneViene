@@ -27,6 +27,8 @@ import net.panamiur.vieneviene.services.GeofenceTransitionsIntentService;
 
 import java.util.ArrayList;
 
+import static android.R.attr.id;
+
 public class WatchDog extends Activity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -136,8 +138,8 @@ public class WatchDog extends Activity implements
     public void addGeogences(){
         onLocationChanged(location);
         geofenceList.add (new Geofence.Builder()
-                .setRequestId("Location")
-                .setCircularRegion(location.getLatitude(),location.getLongitude(), GEOFENCE_RADIUS_IN_METERS)
+                .setRequestId(Long.toString(id))
+                .setCircularRegion(19.432337,-99.192584, GEOFENCE_RADIUS_IN_METERS)
                 .setExpirationDuration(GEOFENCE_EXPIRATION_IN_MILLISECONDS)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT)
         .build())
